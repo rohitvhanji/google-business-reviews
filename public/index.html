@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Google Reviews Viewer</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Google Business Reviews</title>
 </head>
 <body>
-  <h1>Google Business Reviews</h1>
-  <a href="/api/auth/google"><button>Login with Google</button></a>
+<h1>Google Business Reviews</h1>
+<button id="login">Login with Google</button>
+<pre id="reviews"></pre>
+
+<script>
+  document.getElementById('login').onclick = () => {
+    // Redirect to start OAuth flow
+    window.location.href = '/api/auth-google';
+  };
+
+  // After OAuth, the callback endpoint returns JSON reviews.
+  // You can fetch them here if you want or handle differently.
+</script>
 </body>
 </html>
