@@ -4,6 +4,8 @@ export default async function handler(req, res) {
   try {
     const code = req.query.code;
     if (!code) return res.status(400).send('Missing code');
+    console.log('missing code');
+    
 
     const tokenRes = await axios.post(
       'https://oauth2.googleapis.com/token',
@@ -21,6 +23,7 @@ export default async function handler(req, res) {
       }
     );
 
+    console.log('Requesting access token');
     const accessToken = tokenRes.data.access_token;
 
     res.status(200).json({ accessToken });
