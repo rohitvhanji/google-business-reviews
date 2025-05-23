@@ -1,11 +1,10 @@
-// pages/api/index.js
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const code = req.query.code;
-  if (!code) return res.status(400).send('Missing code');
-
   try {
+    const code = req.query.code;
+    if (!code) return res.status(400).send('Missing code');
+
     const tokenRes = await axios.post(
       'https://oauth2.googleapis.com/token',
       new URLSearchParams({
@@ -24,10 +23,9 @@ export default async function handler(req, res) {
 
     const accessToken = tokenRes.data.access_token;
 
-    // You can now use accessToken to call Google APIs
-    res.status(200).json({ token: accessToken });
+    res.status(200).json({ accessToken });
   } catch (err) {
-    console.error(err.response?.data || err.message);
-    res.status(500).send('Token exchange failed.');
+    console.error('OAuth token exchange failed:', err.response?.data || err.message);
+    res.status(500).json({ error: 'Internal Server Error', details: err.response?.data || err.message });
   }
 }
